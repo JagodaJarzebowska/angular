@@ -1,0 +1,16 @@
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="panel panel-primary">
+        <div class="form-group">
+            <div>
+                <h3>Create employee</h3>
+            </div>
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" class="form-control" formControlName="fullName">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
