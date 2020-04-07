@@ -11,6 +11,78 @@
             <label for="email">Email address</label>
             <input type="email" class="form-control" id="email" formControlName="email">
         </div>
+
+
+        <div formGroupName="skills">
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label" for="skillName">
+                    Skill
+                </label>
+                <div class="col-sm-4">
+                    <input id="skillName" type="text" placeholder="Name" class="form-control"
+                        formControlName="skillName">
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" placeholder="Experience in year" class="form-control"
+                        formControlName="experienceInYear">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">Skill</label>
+                <div class="form-check form-check-inline">
+
+                    <label class="form-check-label" for="proficiency">
+                        <input class="form-check-input" type="radio" formControlName="proficiency" id="proficiency"
+                            value="begginer" name="inlineRadioOptions">
+                        Begginer
+                    </label>
+
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="proficiency">
+                        <input class="form-check-input" type="radio" formControlName="proficiency" id="proficiency"
+                            value="intermediate" name="inlineRadioOptions">
+                        Intermediate
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="proficiency">
+                        <input class="form-check-input" type="radio" formControlName="proficiency" id="proficiency"
+                            value="advanced" name="inlineRadioOptions">
+                        Advanced
+                    </label>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <div class="panel-footer">
+        <div class="btn-toolbar" role="toolbar">
+            <button type="submit" class="btn btn-primary mr-2">Save</button>
+            <button type="button" class="btn btn-primary" (click)="onLoadData()">Load Data</button>
+        </div>
+    </div>
 </form>
+
+
+<table border="1">
+    <tr>
+        <th style="padding: 10px;">FormGroup</th>
+        <th style="padding: 10px;">FormControl (fullName)</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px;">
+            touched: {{employeeForm.touched}}
+            <br /> dirty: {{employeeForm.dirty}}
+            <br /> valid: {{employeeForm.valid}}
+            <br /> From values: {{employeeForm.value | json}}
+        </td>
+        <td style="padding: 10px;">
+            touched: {{employeeForm.get('fullName').touched}}
+            <br /> dirty: {{employeeForm.get('fullName').dirty}}
+            <br /> valid: {{employeeForm.get('fullName').valid}}
+            <br /> From values: {{employeeForm.get('fullName').value | json}}
+        </td>
+    </tr>
+</table>
