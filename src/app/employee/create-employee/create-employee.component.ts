@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
@@ -21,7 +21,39 @@ export class CreateEmployeeComponent implements OnInit {
         inlineRadioOptions: ['beginner']
       })
     });
+  }
 
+  logKeyAndValue(group: FormGroup) {
+    Object.keys(group.controls).forEach((key: string) => {
+      const control = group.get(key);
+      if (control instanceof FormGroup) {
+        this.logKeyAndValue(control);
+      } else {
+        console.log('Key = ' + key + ', Value = ' + control.value);
+      }
+    });
+  }
+
+  disable(group: FormGroup) {
+    Object.keys(group.controls).forEach((key: string) => {
+      const control = group.get(key);
+      if (control instanceof FormGroup) {
+        this.disable(control);
+      } else {
+        control.disable();
+      }
+    });
+  }
+
+  logAction() {
+    this.logKeyAndValue(this.employeeForm);
+  }
+
+  disableAction() {
+    this.disable(this.employeeForm);
+  }
+
+  valueChanges() {
     this.employeeForm.get('fullName').valueChanges.subscribe(
       (result: string) => {
         this.nameLength = result.length;

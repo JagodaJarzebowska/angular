@@ -11,11 +11,11 @@
                 && (employeeForm.get('fullName').touched 
                 || employeeForm.get('fullName').dirty)}">
                 <label> {{ nameLength }} </label>
-            <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors.required">
+            <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors && employeeForm.get('fullName').errors.required">
                 Please enter your Full Name
             </div>
-            <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors.minlength 
-            || employeeForm.get('fullName').errors.maxlength">
+            <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors && (employeeForm.get('fullName').errors.minlength 
+            || employeeForm.get('fullName').errors.maxlength)">
                 Full Name must have more than 2 and less than 10 characters
             </div>
         </div>
@@ -72,7 +72,9 @@
     <div class="panel-footer">
         <div class="btn-toolbar" role="toolbar">
             <button type="submit" class="btn btn-primary mr-2">Save</button>
-            <button type="button" class="btn btn-primary" (click)="onLoadData()">Load Data</button>
+            <button type="button" class="btn btn-primary mr-2" (click)="onLoadData()">Load Data</button>
+            <button type="button" class="btn btn-primary mr-2" (click)="logAction()">Log</button>
+            <button type="button" class="btn btn-primary mr-2" (click)="disableAction()">Disable</button>
         </div>
     </div>
 </form>
