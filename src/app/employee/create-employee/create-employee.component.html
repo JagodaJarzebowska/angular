@@ -10,6 +10,7 @@
             [ngClass]="{'is-invalid' : employeeForm.get('fullName').errors 
                 && (employeeForm.get('fullName').touched 
                 || employeeForm.get('fullName').dirty)}">
+                <label> {{ nameLength }} </label>
             <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors.required">
                 Please enter your Full Name
             </div>
