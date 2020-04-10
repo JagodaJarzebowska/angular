@@ -6,22 +6,21 @@
         <div class="form-group">
 
             <label for="fullName">Full Name</label>
-            <input id="fullName" type="text" class="form-control" formControlName="fullName" 
-            [ngClass]="{'is-invalid' : employeeForm.get('fullName').errors 
-                && (employeeForm.get('fullName').touched 
-                || employeeForm.get('fullName').dirty)}">
-                <label> {{ nameLength }} </label>
-            <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors && employeeForm.get('fullName').errors.required">
-                Please enter your Full Name
-            </div>
-            <div class="invalid-feedback" *ngIf="employeeForm.get('fullName').errors && (employeeForm.get('fullName').errors.minlength 
-            || employeeForm.get('fullName').errors.maxlength)">
-                Full Name must have more than 2 and less than 10 characters
-            </div>
+            <input id="fullName" type="text" class="form-control" formControlName="fullName"
+                [ngClass]="{'is-invalid' :  formErros.fullName}" (blur)="logValidationErrors()">
+            <label> {{ nameLength }} </label>
+            <span class="invalid-feedback" *ngIf="formErros.fullName">
+                {{formErros.fullName}}
+            </span>
+
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" formControlName="email">
+            <input type="email" class="form-control" id="email" formControlName="email"
+                [ngClass]="{'is-invalid' :  formErros.email}" (blur)="logValidationErrors()">
+            <span class="invalid-feedback" *ngIf="formErros.email">
+                {{formErros.email}}
+            </span>
         </div>
 
 
@@ -32,40 +31,50 @@
                 </label>
                 <div class="col-sm-4">
                     <input id="skillName" type="text" placeholder="Name" class="form-control"
-                        formControlName="skillName">
+                        formControlName="skillName" [ngClass]="{'is-invalid' : formErros.skillName}"
+                        (blur)="logValidationErrors()">
+                    <span class="invalid-feedback" *ngIf="formErros.skillName">
+                        {{formErros.skillName}}
+                    </span>
                 </div>
                 <div class="col-sm-4">
                     <input type="text" placeholder="Experience in year" class="form-control"
-                        formControlName="experienceInYear">
+                        formControlName="experienceInYear" [ngClass]="{'is-invalid':formErros.experienceInYear}"
+                        (blur)="logValidationErrors()">
+                    <span class="invalid-feedback" *ngIf="formErros.experienceInYear">
+                        {{formErros.experienceInYear}}
+                    </span>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row" [ngClass]="{'is-invalid':formErros.inlineRadioOptions}">
                 <label class="col-sm-1 col-form-label">Skill</label>
                 <div class="form-check form-check-inline">
-
                     <label class="form-check-label" for="beginner">
                         <input class="form-check-input" type="radio" formControlName="inlineRadioOptions" id="beginner"
-                            value="beginner" name="inlineRadioOptions">
+                            value="beginner" name="inlineRadioOptions" (blur)="logValidationErrors()">
                         Beginner
                     </label>
-
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label" for="proficiency">
                         <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
-                            id="intermediate" value="intermediate" name="inlineRadioOptions">
+                            id="intermediate" value="intermediate" name="inlineRadioOptions"
+                            (blur)="logValidationErrors()">
                         Intermediate
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label" for="proficiency">
                         <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
-                            id="proficiency" value="advanced" name="inlineRadioOptions">
+                            id="proficiency" value="advanced" name="inlineRadioOptions" (blur)="logValidationErrors()">
                         Advanced
                     </label>
                 </div>
             </div>
+            <span class="invalid-feedback" *ngIf="formErros.inlineRadioOptions">
+                {{formErros.inlineRadioOptions}}
+            </span>
         </div>
 
     </div>
@@ -75,6 +84,7 @@
             <button type="button" class="btn btn-primary mr-2" (click)="onLoadData()">Load Data</button>
             <button type="button" class="btn btn-primary mr-2" (click)="logAction()">Log</button>
             <button type="button" class="btn btn-primary mr-2" (click)="disableAction()">Disable</button>
+            <button type="button" class="btn btn-primary mr-2" (click)="logErrors()">Log errors</button>
         </div>
     </div>
 </form>

@@ -9,18 +9,51 @@ export class CreateEmployeeComponent implements OnInit {
 
   employeeForm: FormGroup;
   nameLength = 0;
+
+  validationMsg = {
+    'fullName': {
+      'required': 'Full name is required.',
+      'minlength': 'Full name must be greater than 2.',
+      'maxlength': 'Full name must be less than 10.',
+    },
+    'email': {
+      'required': 'Email is required.'
+    },
+    'skillName': {
+      'required': 'Skill name is required.'
+    },
+    'experienceInYear': {
+      'required': 'Experience is required.'
+    },
+    'inlineRadioOptions': {
+      'required': 'Proficiency is required.'
+    }
+  };
+
+  formErros = {
+    'fullName': '',
+    'email': '',
+    'skillName': '',
+    'experienceInYear': '',
+    'inlineRadioOptions': ''
+  };
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.employeeForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
-      email: [''],
+      email: ['', Validators.required],
       skills: this.formBuilder.group({
-        skillName: [''],
-        experienceInYear: [''],
-        inlineRadioOptions: ['beginner']
+        skillName: ['', Validators.required],
+        experienceInYear: ['', Validators.required],
+        inlineRadioOptions: ['', Validators.required]
       })
     });
+
+    this.employeeForm.valueChanges.subscribe(data => {
+      this.logValidationErrors(this.employeeForm);
+    })
   }
 
   logKeyAndValue(group: FormGroup) {
@@ -45,12 +78,38 @@ export class CreateEmployeeComponent implements OnInit {
     });
   }
 
+  logValidationErrors(group: FormGroup = this.employeeForm) {
+    Object.keys(group.controls).forEach((key: string) => {
+      const control = group.get(key);
+      if (control instanceof FormGroup) {
+        this.logValidationErrors(control);
+      } else {
+        this.formErros[key] = '';
+        if (control && !control.valid && (control.touched || control.dirty)) {
+          const message = this.validationMsg[key];
+          console.log(message);
+          for (const errorKey in control.errors) {
+            if (errorKey) {
+              this.formErros[key] += message[errorKey] + ' ';
+            }
+          }
+        }
+      }
+    });
+  }
+
+
   logAction() {
     this.logKeyAndValue(this.employeeForm);
   }
 
   disableAction() {
     this.disable(this.employeeForm);
+  }
+
+  logErrors() {
+    this.logValidationErrors(this.employeeForm);
+    console.log(this.formErros);
   }
 
   valueChanges() {
