@@ -21,6 +21,12 @@ export class CreateEmployeeComponent implements OnInit {
       'required': 'Email is required.',
       'emailDomain': 'Email domain should be gmail.com'
     },
+    'confirmEmail': {
+      'required': 'Confirm Email is required.',
+    },
+    'emailGroup': {
+      'emailMissMatch': 'Email and Confirm Email do not match.',
+    },
     'phone': {
       'required': 'Phone is required.'
     },
@@ -38,6 +44,8 @@ export class CreateEmployeeComponent implements OnInit {
   formErros = {
     'fullName': '',
     'email': '',
+    'confirmEmail': '',
+    'emailGroup': '',
     'phone': '',
     'skillName': '',
     'experienceInYear': '',
@@ -50,7 +58,11 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
       contactPreference: ['email'],
-      email: ['', [Validators.required, CustomValidators.emailDomain('gmail.com')]],
+      emailGroup: this.formBuilder.group({
+        email: ['', [Validators.required, CustomValidators.emailDomain('gmail.com')]],
+        confirmEmail: ['', Validators.required],
+      }, { validators: CustomValidators.matchEmail()}),
+
       phone: [''],
       skills: this.formBuilder.group({
         skillName: ['', Validators.required],
@@ -106,19 +118,20 @@ export class CreateEmployeeComponent implements OnInit {
   logValidationErrors(group: FormGroup = this.employeeForm) {
     Object.keys(group.controls).forEach((key: string) => {
       const control = group.get(key);
-      if (control instanceof FormGroup) {
-        this.logValidationErrors(control);
-      } else {
-        this.formErros[key] = '';
-        if (control && !control.valid && (control.touched || control.dirty)) {
-          const message = this.validationMsg[key];
-          console.log(message);
-          for (const errorKey in control.errors) {
-            if (errorKey) {
-              this.formErros[key] += message[errorKey] + ' ';
-            }
+
+      this.formErros[key] = '';
+      if (control && !control.valid && (control.touched || control.dirty)) {
+        const message = this.validationMsg[key];
+        console.log(message);
+        for (const errorKey in control.errors) {
+          if (errorKey) {
+            this.formErros[key] += message[errorKey] + ' ';
           }
         }
+      }
+
+      if (control instanceof FormGroup) {
+        this.logValidationErrors(control);
       }
     });
   }
@@ -180,3 +193,13 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
 }
+
+// function matchEmail(group: AbstractControl): { [key: string]: any } | any {
+//   const emailControl = group.get('email');
+//   const confirmEmailControl = group.get('confirmEmail');
+//   if (emailControl.value === confirmEmailControl.value || confirmEmailControl.pristine) {
+//     return null;
+//   } else {
+//     return { 'emailMissMatch': true };
+//   }
+// }
