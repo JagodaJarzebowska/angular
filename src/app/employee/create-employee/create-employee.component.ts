@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { CustomValidators } from 'src/app/shared/custon.validators';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
@@ -49,7 +50,7 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
       contactPreference: ['email'],
-      email: ['', [Validators.required, emailDomain('gmail.com')]],
+      email: ['', [Validators.required, CustomValidators.emailDomain('gmail.com')]],
       phone: [''],
       skills: this.formBuilder.group({
         skillName: ['', Validators.required],
@@ -178,16 +179,4 @@ export class CreateEmployeeComponent implements OnInit {
     // });
   }
 
-}
-
-function emailDomain(domainName: string) {
-  return (control: AbstractControl): { [key: string]: any } | null =>{
-    const email: string = control.value;
-    const domain = email.substring(email.lastIndexOf('@') + 1);
-    if (email === '' || domain === domainName.toLowerCase()) {
-      return null;
-    } else {
-      return { 'emailDomain': true }
-    };
-  }
 }
