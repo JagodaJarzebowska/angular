@@ -14,12 +14,47 @@
             </span>
 
         </div>
+
+
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Contact preference</legend>
+            <div class="col-sm-10">
+                <div class="form-group row">
+                    <div class="form-check">
+                        <label class="form-check-label" for="email">
+                            <input class="form-check-input" type="radio" name="contactPreference" id="contactPreference2" value="email"
+                            formControlName="contactPreference" (click)="onContactPreferenceChange('email')">
+                            Email
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label" for="phone">
+                            <input class="form-check-input" type="radio" name="contactPreference" id="contactPreference1" value="phone"
+                                 formControlName="contactPreference" (click)="onContactPreferenceChange('phone')">
+                            Phone
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <label for="email">Email address</label>
             <input type="email" class="form-control" id="email" formControlName="email"
                 [ngClass]="{'is-invalid' :  formErros.email}" (blur)="logValidationErrors()">
             <span class="invalid-feedback" *ngIf="formErros.email">
                 {{formErros.email}}
+            </span>
+        </div>
+
+
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="phone" class="form-control" id="phone" formControlName="phone"
+                [ngClass]="{'is-invalid' :  formErros.phone}" (blur)="logValidationErrors()">
+            <span class="invalid-feedback" *ngIf="formErros.phone">
+                {{formErros.phone}}
             </span>
         </div>
 
@@ -57,7 +92,7 @@
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="proficiency">
+                    <label class="form-check-label" for="intermediate">
                         <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
                             id="intermediate" value="intermediate" name="inlineRadioOptions"
                             (blur)="logValidationErrors()">
@@ -65,9 +100,9 @@
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="proficiency">
-                        <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
-                            id="proficiency" value="advanced" name="inlineRadioOptions" (blur)="logValidationErrors()">
+                    <label class="form-check-label" for="advanced">
+                        <input class="form-check-input" type="radio" formControlName="inlineRadioOptions" id="advanced"
+                            value="advanced" name="inlineRadioOptions" (blur)="logValidationErrors()">
                         Advanced
                     </label>
                 </div>

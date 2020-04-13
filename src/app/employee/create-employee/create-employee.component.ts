@@ -19,6 +19,9 @@ export class CreateEmployeeComponent implements OnInit {
     'email': {
       'required': 'Email is required.'
     },
+    'phone': {
+      'required': 'Phone is required.'
+    },
     'skillName': {
       'required': 'Skill name is required.'
     },
@@ -33,6 +36,7 @@ export class CreateEmployeeComponent implements OnInit {
   formErros = {
     'fullName': '',
     'email': '',
+    'phone': '',
     'skillName': '',
     'experienceInYear': '',
     'inlineRadioOptions': ''
@@ -43,7 +47,9 @@ export class CreateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.employeeForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      contactPreference: ['email'],
       email: ['', Validators.required],
+      phone: [''],
       skills: this.formBuilder.group({
         skillName: ['', Validators.required],
         experienceInYear: ['', Validators.required],
@@ -55,6 +61,18 @@ export class CreateEmployeeComponent implements OnInit {
       this.logValidationErrors(this.employeeForm);
     })
   }
+
+
+  onContactPreferenceChange(value: string) {
+    const phoneControl = this.employeeForm.get('phone');
+    if (value === 'phone') {
+      phoneControl.setValidators(Validators.required);
+    } else {
+      phoneControl.clearValidators();
+    }
+    phoneControl.updateValueAndValidity();
+  }
+
 
   logKeyAndValue(group: FormGroup) {
     Object.keys(group.controls).forEach((key: string) => {
