@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, FormArray } from '@angular/forms';
 import { CustomValidators } from 'src/app/shared/custon.validators';
 @Component({
   selector: 'app-create-employee',
@@ -61,7 +61,7 @@ export class CreateEmployeeComponent implements OnInit {
       emailGroup: this.formBuilder.group({
         email: ['', [Validators.required, CustomValidators.emailDomain('gmail.com')]],
         confirmEmail: ['', Validators.required],
-      }, { validators: CustomValidators.matchEmail()}),
+      }, { validators: CustomValidators.matchEmail() }),
 
       phone: [''],
       skills: this.formBuilder.group({
@@ -190,6 +190,37 @@ export class CreateEmployeeComponent implements OnInit {
     //     proficiency: 'begginer'
     //   }
     // });
+  }
+
+  formArray() {
+    const formArray = new FormArray([
+      new FormControl('John', Validators.required),
+      new FormGroup({
+        country: new FormControl('', Validators.required)
+      }),
+      new FormArray([])
+    ]);
+    //serialize as array
+    const formArray1 = this.formBuilder.array([
+      new FormControl('Jagoda', Validators.required),
+      new FormControl('IT', Validators.required),
+      new FormControl('', Validators.required),
+    ]);
+    formArray1.push(new FormControl('three', Validators.required));
+    console.log('Array-> ');
+    console.log(formArray1);
+    //serialize as object
+    const formGroup = this.formBuilder.group([
+      new FormControl('Jagoda', Validators.required),
+      new FormControl('IT', Validators.required),
+      new FormControl('', Validators.required),
+    ]);
+
+    console.log('Group-> ');
+    console.log(formGroup);
+
+    // console.log(formArray1.at(3));
+    // console.log(formArray1.value);
   }
 
 }
