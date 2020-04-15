@@ -68,25 +68,33 @@
             </span>
         </div>
 
-
-        <div formArrayName="skills">
-            <div formGroupName="0">
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-primary mr-2" (click)="addSkillButtonClick()">
+                Add Skill</button>
+            </div>
+        </div>
+        <div formArrayName="skills" *ngFor="let skill of this.employeeForm.get('skills')['controls']; let i = index">
+            <div [formGroupName]="i">
                 <div class="form-group row">
-                    <label class="col-sm-1 col-form-label" for="skillName">
+                    <label class="col-sm-1 col-form-label" [attr.for]="'skillName' + i">
                         Skill
                     </label>
                     <div class="col-sm-4">
-                        <input id="skillName" type="text" placeholder="Name" class="form-control"
+                        <input [id]="'skillName' + i" type="text" placeholder="Name" class="form-control"
                             formControlName="skillName" [ngClass]="{'is-invalid' : formErros.skillName}"
                             (blur)="logValidationErrors()">
                         <span class="invalid-feedback" *ngIf="formErros.skillName">
                             {{formErros.skillName}}
                         </span>
                     </div>
+                    <label class="col-sm-1 col-form-label" [attr.for]="'experienceInYear'+i">
+                        Experience
+                    </label>
                     <div class="col-sm-4">
                         <input type="text" placeholder="Experience in year" class="form-control"
                             formControlName="experienceInYear" [ngClass]="{'is-invalid':formErros.experienceInYear}"
-                            (blur)="logValidationErrors()">
+                            (blur)="logValidationErrors()" [id]="'experienceInYear'+i">
                         <span class="invalid-feedback" *ngIf="formErros.experienceInYear">
                             {{formErros.experienceInYear}}
                         </span>

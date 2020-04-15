@@ -151,6 +151,10 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
 
+  addSkillButtonClick(): void {    
+    (<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
+  }
+
   logAction() {
     this.logKeyAndValue(this.employeeForm);
   }
