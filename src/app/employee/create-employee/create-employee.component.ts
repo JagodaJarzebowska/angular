@@ -64,11 +64,9 @@ export class CreateEmployeeComponent implements OnInit {
       }, { validators: CustomValidators.matchEmail() }),
 
       phone: [''],
-      skills: this.formBuilder.group({
-        skillName: ['', Validators.required],
-        experienceInYear: ['', Validators.required],
-        inlineRadioOptions: ['', Validators.required]
-      })
+      skills: this.formBuilder.array([
+        this.addSkillFormGroup()
+      ])
     });
 
 
@@ -81,6 +79,14 @@ export class CreateEmployeeComponent implements OnInit {
     })
   }
 
+
+  addSkillFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      skillName: ['', Validators.required],
+      experienceInYear: ['', Validators.required],
+      inlineRadioOptions: ['', Validators.required]
+    })
+  }
 
   onContactPreferenceChange(value: string) {
     const phoneControl = this.employeeForm.get('phone');
@@ -132,6 +138,14 @@ export class CreateEmployeeComponent implements OnInit {
 
       if (control instanceof FormGroup) {
         this.logValidationErrors(control);
+      }
+
+      if (control instanceof FormArray) {
+        for (const cntrl of control.controls) {
+          if (cntrl instanceof FormGroup) {
+            this.logValidationErrors(cntrl);
+          }
+        }
       }
     });
   }

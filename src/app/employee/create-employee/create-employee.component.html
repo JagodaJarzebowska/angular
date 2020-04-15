@@ -59,8 +59,6 @@
             </div>
         </div>
 
-
-
         <div class="form-group">
             <label for="phone">Phone</label>
             <input type="phone" class="form-control" id="phone" formControlName="phone"
@@ -71,57 +69,59 @@
         </div>
 
 
-        <div formGroupName="skills">
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label" for="skillName">
-                    Skill
-                </label>
-                <div class="col-sm-4">
-                    <input id="skillName" type="text" placeholder="Name" class="form-control"
-                        formControlName="skillName" [ngClass]="{'is-invalid' : formErros.skillName}"
-                        (blur)="logValidationErrors()">
-                    <span class="invalid-feedback" *ngIf="formErros.skillName">
-                        {{formErros.skillName}}
-                    </span>
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" placeholder="Experience in year" class="form-control"
-                        formControlName="experienceInYear" [ngClass]="{'is-invalid':formErros.experienceInYear}"
-                        (blur)="logValidationErrors()">
-                    <span class="invalid-feedback" *ngIf="formErros.experienceInYear">
-                        {{formErros.experienceInYear}}
-                    </span>
-                </div>
-            </div>
-
-            <div class="form-group row" [ngClass]="{'is-invalid':formErros.inlineRadioOptions}">
-                <label class="col-sm-1 col-form-label">Skill</label>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="beginner">
-                        <input class="form-check-input" type="radio" formControlName="inlineRadioOptions" id="beginner"
-                            value="beginner" name="inlineRadioOptions" (blur)="logValidationErrors()">
-                        Beginner
+        <div formArrayName="skills">
+            <div formGroupName="0">
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label" for="skillName">
+                        Skill
                     </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="intermediate">
-                        <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
-                            id="intermediate" value="intermediate" name="inlineRadioOptions"
+                    <div class="col-sm-4">
+                        <input id="skillName" type="text" placeholder="Name" class="form-control"
+                            formControlName="skillName" [ngClass]="{'is-invalid' : formErros.skillName}"
                             (blur)="logValidationErrors()">
-                        Intermediate
-                    </label>
+                        <span class="invalid-feedback" *ngIf="formErros.skillName">
+                            {{formErros.skillName}}
+                        </span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Experience in year" class="form-control"
+                            formControlName="experienceInYear" [ngClass]="{'is-invalid':formErros.experienceInYear}"
+                            (blur)="logValidationErrors()">
+                        <span class="invalid-feedback" *ngIf="formErros.experienceInYear">
+                            {{formErros.experienceInYear}}
+                        </span>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="advanced">
-                        <input class="form-check-input" type="radio" formControlName="inlineRadioOptions" id="advanced"
-                            value="advanced" name="inlineRadioOptions" (blur)="logValidationErrors()">
-                        Advanced
-                    </label>
+
+                <div class="form-group row" [ngClass]="{'is-invalid':formErros.inlineRadioOptions}">
+                    <label class="col-sm-1 col-form-label">Skill</label>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="beginner">
+                            <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
+                                id="beginner" value="beginner" name="inlineRadioOptions" (blur)="logValidationErrors()">
+                            Beginner
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="intermediate">
+                            <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
+                                id="intermediate" value="intermediate" name="inlineRadioOptions"
+                                (blur)="logValidationErrors()">
+                            Intermediate
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="advanced">
+                            <input class="form-check-input" type="radio" formControlName="inlineRadioOptions"
+                                id="advanced" value="advanced" name="inlineRadioOptions" (blur)="logValidationErrors()">
+                            Advanced
+                        </label>
+                    </div>
                 </div>
+                <span class="invalid-feedback" *ngIf="formErros.inlineRadioOptions">
+                    {{formErros.inlineRadioOptions}}
+                </span>
             </div>
-            <span class="invalid-feedback" *ngIf="formErros.inlineRadioOptions">
-                {{formErros.inlineRadioOptions}}
-            </span>
         </div>
 
     </div>
