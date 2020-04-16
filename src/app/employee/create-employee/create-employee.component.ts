@@ -135,7 +135,11 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
 
-  addSkillButtonClick(): void {    
+  removeSkillButtonClick(index: number): void {
+    (<FormArray>this.employeeForm.get('skills')).removeAt(index);
+  }
+
+  addSkillButtonClick(): void {
     (<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
   }
 
