@@ -30,15 +30,6 @@ export class CreateEmployeeComponent implements OnInit {
     'phone': {
       'required': 'Phone is required.'
     },
-    'skillName': {
-      'required': 'Skill name is required.'
-    },
-    'experienceInYear': {
-      'required': 'Experience is required.'
-    },
-    'inlineRadioOptions': {
-      'required': 'Proficiency is required.'
-    }
   };
 
   formErros = {
@@ -140,13 +131,6 @@ export class CreateEmployeeComponent implements OnInit {
         this.logValidationErrors(control);
       }
 
-      if (control instanceof FormArray) {
-        for (const cntrl of control.controls) {
-          if (cntrl instanceof FormGroup) {
-            this.logValidationErrors(cntrl);
-          }
-        }
-      }
     });
   }
 
