@@ -1,1 +1,24 @@
-<p>list-employee works!</p>
+<div>
+<table class="table table-striped" *ngIf="employees && employees.length">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Emails</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Contact preference</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <th scope="row">{{employee.id}}</th>
+        <td>{{employee.fullName}}</td>
+        <td>{{employee.email}}</td>
+        <td>{{employee.phone}}</td>
+        <td>{{employee.contactPreference}}</td>
+        <td> <button class="btn btn-primary mr-2">Edit</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

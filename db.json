@@ -1,0 +1,47 @@
+{
+    "employees": [
+        {
+            "id": 1,
+            "fullName": "Name1",
+            "contactPreference": "email",
+            "email": "email@email.com",
+            "phone": "123123123",
+            "skills": [
+                {
+                    "skillName": "Java",
+                    "experienceInYear": 2,
+                    "inlineRadioOptions": "beginner"
+                },
+                {
+                    "skillName": "C#",
+                    "experienceInYear": 4,
+                    "inlineRadioOptions": "intermediate"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "fullName": "Name2",
+            "contactPreference": "phone",
+            "email": "email@email.com",
+            "phone": "123123123",
+            "skills": [
+                {
+                    "skillName": "Java",
+                    "experienceInYear": 2,
+                    "inlineRadioOptions": "beginner"
+                },
+                {
+                    "skillName": "C#",
+                    "experienceInYear": 4,
+                    "inlineRadioOptions": "intermediate"
+                },
+                {
+                    "skillName": "Angular",
+                    "experienceInYear": 1,
+                    "inlineRadioOptions": "beginner"
+                }
+            ]
+        }
+    ]
+}
