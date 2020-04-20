@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, FormArray } from '@angular/forms';
 import { CustomValidators } from 'src/app/shared/custon.validators';
+import { ActivatedRoute } from '@angular/router';
+import { EmployeeService } from '../employee.service';
+import { IEmployee } from 'src/app/model/IEmployee';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
@@ -43,7 +46,8 @@ export class CreateEmployeeComponent implements OnInit {
     'inlineRadioOptions': ''
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
+    private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.employeeForm = this.formBuilder.group({
@@ -67,9 +71,35 @@ export class CreateEmployeeComponent implements OnInit {
 
     this.employeeForm.valueChanges.subscribe(data => {
       this.logValidationErrors(this.employeeForm);
-    })
+    });
+
+    this.route.paramMap.subscribe(param => {
+      const empId = +param.get('id');
+      if (empId) {
+        this.getEmployee(empId);
+      }
+    });
   }
 
+
+  getEmployee(id: number) {
+    this.employeeService.getEmplyee(id).subscribe((employe: IEmployee) => {
+      this.editEmployee(employe),
+        (err: any) => console.log(err);
+    });
+  }
+
+  editEmployee(employee: IEmployee) {
+    this.employeeForm.patchValue({
+      fullName: employee.fullName,
+      contactPreference: employee.contactPreference,
+      emailGroup: {
+        email: employee.email,
+        confirmEmail: employee.email
+      },
+      phone: employee.phone
+    });
+  }
 
   addSkillFormGroup(): FormGroup {
     return this.formBuilder.group({
@@ -117,7 +147,7 @@ export class CreateEmployeeComponent implements OnInit {
       const control = group.get(key);
 
       this.formErros[key] = '';
-      if (control && !control.valid && (control.touched || control.dirty)) {
+      if (control && !control.valid && (control.touched || control.dirty || control.value !=='')) {
         const message = this.validationMsg[key];
         console.log(message);
         for (const errorKey in control.errors) {

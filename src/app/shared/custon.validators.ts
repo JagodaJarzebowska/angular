@@ -18,7 +18,8 @@ export class CustomValidators {
         return (group: AbstractControl): { [key: string]: any } | any => {
             const emailControl = group.get('email');
             const confirmEmailControl = group.get('confirmEmail');
-            if (emailControl.value === confirmEmailControl.value || confirmEmailControl.pristine) {
+            if (emailControl.value === confirmEmailControl.value 
+                || (confirmEmailControl.pristine && emailControl.value === '')) {
                 return null;
             } else {
                 return { 'emailMissMatch': true };

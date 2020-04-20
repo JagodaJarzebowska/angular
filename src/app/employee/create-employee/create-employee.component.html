@@ -148,7 +148,7 @@
     </div>
     <div class="panel-footer">
         <div class="btn-toolbar" role="toolbar">
-            <button type="submit" class="btn btn-primary mr-2">Save</button>
+            <button type="submit" class="btn btn-primary mr-2" [disabled]="employeeForm.invalid">Save</button>
             <button type="button" class="btn btn-primary mr-2" (click)="onLoadData()">Load Data</button>
             <button type="button" class="btn btn-primary mr-2" (click)="logAction()">Log</button>
             <button type="button" class="btn btn-primary mr-2" (click)="disableAction()">Disable</button>

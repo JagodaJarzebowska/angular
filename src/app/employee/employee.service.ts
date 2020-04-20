@@ -3,6 +3,9 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators'; 
 import { IEmployee } from '../model/IEmployee';
+/*
+json-server --watch db.json
+*/
 @Injectable({
   providedIn: 'root'
 })
@@ -28,10 +31,10 @@ export class EmployeeService {
   }
 
 
-  // public getEmplyee(id: number):Observable<IEmployee>{
-  //     return this.http.get<IEmployee>(this.baseUrl+'/'+id)
-  //     .pipe(catchError(this.handleError));
-  // }
+  public getEmplyee(id: number):Observable<IEmployee>{
+      return this.http.get<IEmployee>(this.baseUrl+'/'+id)
+      .pipe(catchError(this.handleError));
+  }
 
   // public addEmployee(employee: IEmployee): Observable<IEmployee>{
   //   return this.http.post<IEmployee>(this.baseUrl, employee);
