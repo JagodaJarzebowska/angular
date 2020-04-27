@@ -15,6 +15,7 @@ export class CreateEmployeeComponent implements OnInit {
   employee: IEmployee;
   employeeForm: FormGroup;
   nameLength = 0;
+  pageTitle: string;
 
   validationMsg = {
     'fullName': {
@@ -78,7 +79,18 @@ export class CreateEmployeeComponent implements OnInit {
     this.activeRoute.paramMap.subscribe(param => {
       const empId = +param.get('id');
       if (empId) {
+        this.pageTitle = 'Edit employee';
         this.getEmployee(empId);
+      } else {
+        this.pageTitle = 'Create employee';
+        this.employee = {
+          id: null,
+          fullName: '',
+          contactPreference: '',
+          email: '',
+          phone: null,
+          skills: []
+        }
       }
     });
   }
@@ -224,16 +236,23 @@ export class CreateEmployeeComponent implements OnInit {
 
   onSubmit(): void {
     this.mapFormValuesToEmployeeModel();
-    this.employeeService.updateEmployee(this.employee).subscribe(
-      () => this.router.navigate(['list']),
-      (err: any) => console.log(err)
-    );
+    if (this.employee.id) {
+      this.employeeService.updateEmployee(this.employee).subscribe(
+        () => this.router.navigate(['list']),
+        (err: any) => console.log(err)
+      );
+    } else {
+      this.employeeService.addEmployee(this.employee).subscribe(
+        () => this.router.navigate(['list']),
+        (err: any) => console.log(err)
+      );
+    }
   }
 
   mapFormValuesToEmployeeModel() {
     this.employee.fullName = this.employeeForm.value.fullName;
     this.employee.contactPreference = this.employeeForm.value.contactPreference;
-    this.employee.email = this.employeeForm.value.email;
+    this.employee.email = this.employeeForm.value.emailGroup.email;
     this.employee.phone = this.employeeForm.value.phone;
     this.employee.skills = this.employeeForm.value.skills;
   }

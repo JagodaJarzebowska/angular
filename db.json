@@ -41,6 +41,20 @@
           "inlineRadioOptions": "beginner"
         }
       ]
+    },
+    {
+      "id": 3,
+      "fullName": "AAA",
+      "contactPreference": "email",
+      "email": "AAA@gmail.com",
+      "phone": "123123123",
+      "skills": [
+        {
+          "skillName": "Angular",
+          "experienceInYear": "2",
+          "inlineRadioOptions": "intermediate"
+        }
+      ]
     }
   ]
 }

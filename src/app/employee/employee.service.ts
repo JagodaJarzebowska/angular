@@ -36,9 +36,13 @@ export class EmployeeService {
       .pipe(catchError(this.handleError));
   }
 
-  // public addEmployee(employee: IEmployee): Observable<IEmployee>{
-  //   return this.http.post<IEmployee>(this.baseUrl, employee);
-  // }
+  public addEmployee(employee: IEmployee): Observable<IEmployee> {
+    return this.http.post<IEmployee>(this.baseUrl, employee, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).pipe(catchError(this.handleError));
+  }
 
   public updateEmployee(employee: IEmployee): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${employee.id}`, employee, {
