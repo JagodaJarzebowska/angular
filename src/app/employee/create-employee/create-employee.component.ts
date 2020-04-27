@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl, AbstractControl, FormArray } from '@angular/forms';
 import { CustomValidators } from 'src/app/shared/custon.validators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { IEmployee } from 'src/app/model/IEmployee';
 import { ISkill } from 'src/app/model/ISkill';
@@ -12,6 +12,7 @@ import { ISkill } from 'src/app/model/ISkill';
 })
 export class CreateEmployeeComponent implements OnInit {
 
+  employee: IEmployee;
   employeeForm: FormGroup;
   nameLength = 0;
 
@@ -47,8 +48,8 @@ export class CreateEmployeeComponent implements OnInit {
     'inlineRadioOptions': ''
   };
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
-    private employeeService: EmployeeService) { }
+  constructor(private formBuilder: FormBuilder, private activeRoute: ActivatedRoute,
+    private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit(): void {
     this.employeeForm = this.formBuilder.group({
@@ -74,7 +75,7 @@ export class CreateEmployeeComponent implements OnInit {
       this.logValidationErrors(this.employeeForm);
     });
 
-    this.route.paramMap.subscribe(param => {
+    this.activeRoute.paramMap.subscribe(param => {
       const empId = +param.get('id');
       if (empId) {
         this.getEmployee(empId);
@@ -86,8 +87,9 @@ export class CreateEmployeeComponent implements OnInit {
   getEmployee(id: number) {
     this.employeeService.getEmplyee(id).subscribe((employe: IEmployee) => {
       this.editEmployee(employe),
-        (err: any) => console.log(err);
-    });
+        this.employee = employe;
+    },
+      (err: any) => console.log(err));
   }
 
   editEmployee(employee: IEmployee) {
@@ -105,14 +107,14 @@ export class CreateEmployeeComponent implements OnInit {
 
   }
 
-  setExistingSkills(skillSets: ISkill[]): FormArray{
+  setExistingSkills(skillSets: ISkill[]): FormArray {
     const formArray = new FormArray([]);
     skillSets.forEach(s => {
-     formArray.push(this.formBuilder.group({
+      formArray.push(this.formBuilder.group({
         skillName: s.skillName,
         experienceInYear: s.experienceInYear,
         inlineRadioOptions: s.inlineRadioOptions
-      })); 
+      }));
     });
     return formArray;
   }
@@ -163,7 +165,7 @@ export class CreateEmployeeComponent implements OnInit {
       const control = group.get(key);
 
       this.formErros[key] = '';
-      if (control && !control.valid && (control.touched || control.dirty || control.value !=='')) {
+      if (control && !control.valid && (control.touched || control.dirty || control.value !== '')) {
         const message = this.validationMsg[key];
         console.log(message);
         for (const errorKey in control.errors) {
@@ -221,11 +223,19 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.employeeForm.value);
-    // take a value
-    console.log(this.employeeForm.controls.fullName.value);
-    console.log(this.employeeForm.controls.email.value);
-    console.log(this.employeeForm.get('fullName').value);
+    this.mapFormValuesToEmployeeModel();
+    this.employeeService.updateEmployee(this.employee).subscribe(
+      () => this.router.navigate(['list']),
+      (err: any) => console.log(err)
+    );
+  }
+
+  mapFormValuesToEmployeeModel() {
+    this.employee.fullName = this.employeeForm.value.fullName;
+    this.employee.contactPreference = this.employeeForm.value.contactPreference;
+    this.employee.email = this.employeeForm.value.email;
+    this.employee.phone = this.employeeForm.value.phone;
+    this.employee.skills = this.employeeForm.value.skills;
   }
 
   onLoadData(): void {
