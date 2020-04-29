@@ -22,9 +22,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
-    EmployeeModule
+    EmployeeModule,      // All Features Modules should be imported before AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]
