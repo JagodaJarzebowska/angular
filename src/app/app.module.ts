@@ -8,12 +8,16 @@ import { ListEmployeeComponent } from './employee/list-employee/list-employee.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeService } from './employee/employee.service';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateEmployeeComponent,
-    ListEmployeeComponent
+    ListEmployeeComponent,
+    HomeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
