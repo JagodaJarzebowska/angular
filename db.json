@@ -4,6 +4,7 @@
       "id": 1,
       "fullName": "NameTest",
       "contactPreference": "email",
+      "email": "email@gmail.com",
       "phone": "11111111",
       "skills": [
         {
