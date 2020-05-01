@@ -3,13 +3,10 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { EmployeeModule } from './employee/employee.module';
 
 import { EmployeeService } from './employee/employee.service';
 
-
 import { AppComponent } from './app.component';
-
 
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -23,7 +20,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     BrowserModule,
     HttpClientModule,
-    EmployeeModule,      // All Features Modules should be imported before AppRoutingModule
+                         // All Features Modules should be imported before AppRoutingModule
     AppRoutingModule,
   ],
   providers: [EmployeeService],
